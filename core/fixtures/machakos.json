@@ -1,0 +1,72 @@
+[
+  {
+    "model": "core.county",
+    "pk": "11111111-1111-1111-1111-111111111111",
+    "fields": {"name": "Machakos"}
+  },
+
+  { "model": "core.constituency", "pk": "22222222-1111-1111-1111-111111111111", "fields": { "name": "Masinga", "county": "11111111-1111-1111-1111-111111111111" }},
+  { "model": "core.constituency", "pk": "22222222-2222-1111-1111-111111111111", "fields": { "name": "Yatta", "county": "11111111-1111-1111-1111-111111111111" }},
+  { "model": "core.constituency", "pk": "22222222-3333-1111-1111-111111111111", "fields": { "name": "Kangundo", "county": "11111111-1111-1111-1111-111111111111" }},
+  { "model": "core.constituency", "pk": "22222222-4444-1111-1111-111111111111", "fields": { "name": "Matungulu", "county": "11111111-1111-1111-1111-111111111111" }},
+  { "model": "core.constituency", "pk": "22222222-5555-1111-1111-111111111111", "fields": { "name": "Kathiani", "county": "11111111-1111-1111-1111-111111111111" }},
+  { "model": "core.constituency", "pk": "22222222-6666-1111-1111-111111111111", "fields": { "name": "Mavoko", "county": "11111111-1111-1111-1111-111111111111" }},
+  { "model": "core.constituency", "pk": "22222222-7777-1111-1111-111111111111", "fields": { "name": "Machakos Town", "county": "11111111-1111-1111-1111-111111111111" }},
+  { "model": "core.constituency", "pk": "22222222-8888-1111-1111-111111111111", "fields": { "name": "Mwala", "county": "11111111-1111-1111-1111-111111111111" }},
+
+ 
+  { "model": "core.ward", "pk": "33333333-0001-1111-1111-111111111111", "fields": { "name": "Kivaa", "constituency": "22222222-1111-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0002-1111-1111-111111111111", "fields": { "name": "Masinga Central", "constituency": "22222222-1111-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0003-1111-1111-111111111111", "fields": { "name": "Ekalakala", "constituency": "22222222-1111-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0004-1111-1111-111111111111", "fields": { "name": "Muthesya", "constituency": "22222222-1111-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0005-1111-1111-111111111111", "fields": { "name": "Ndithini", "constituency": "22222222-1111-1111-1111-111111111111" }},
+
+
+  { "model": "core.ward", "pk": "33333333-0006-1111-1111-111111111111", "fields": { "name": "Ndalani", "constituency": "22222222-2222-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0007-1111-1111-111111111111", "fields": { "name": "Matuu", "constituency": "22222222-2222-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0008-1111-1111-111111111111", "fields": { "name": "Kithimani", "constituency": "22222222-2222-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0009-1111-1111-111111111111", "fields": { "name": "Ikombe", "constituency": "22222222-2222-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0010-1111-1111-111111111111", "fields": { "name": "Katangi", "constituency": "22222222-2222-1111-1111-111111111111" }},
+
+
+  { "model": "core.ward", "pk": "33333333-0011-1111-1111-111111111111", "fields": { "name": "Kangundo North", "constituency": "22222222-3333-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0012-1111-1111-111111111111", "fields": { "name": "Kangundo Central", "constituency": "22222222-3333-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0013-1111-1111-111111111111", "fields": { "name": "Kangundo East", "constituency": "22222222-3333-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0014-1111-1111-111111111111", "fields": { "name": "Kangundo West", "constituency": "22222222-3333-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0015-1111-1111-111111111111", "fields": { "name": "Kangundo South", "constituency": "22222222-3333-1111-1111-111111111111" }},
+
+
+  { "model": "core.ward", "pk": "33333333-0016-1111-1111-111111111111", "fields": { "name": "Tala", "constituency": "22222222-4444-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0017-1111-1111-111111111111", "fields": { "name": "Matungulu North", "constituency": "22222222-4444-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0018-1111-1111-111111111111", "fields": { "name": "Matungulu East", "constituency": "22222222-4444-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0019-1111-1111-111111111111", "fields": { "name": "Matungulu West", "constituency": "22222222-4444-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0020-1111-1111-111111111111", "fields": { "name": "Kyeleni", "constituency": "22222222-4444-1111-1111-111111111111" }},
+
+
+  { "model": "core.ward", "pk": "33333333-0021-1111-1111-111111111111", "fields": { "name": "Mitaboni", "constituency": "22222222-5555-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0022-1111-1111-111111111111", "fields": { "name": "Kathiani Central", "constituency": "22222222-5555-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0023-1111-1111-111111111111", "fields": { "name": "Upper Kaewa/Iveti", "constituency": "22222222-5555-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0024-1111-1111-111111111111", "fields": { "name": "Lower Kaewa/Kaani", "constituency": "22222222-5555-1111-1111-111111111111" }},
+
+ 
+  { "model": "core.ward", "pk": "33333333-0025-1111-1111-111111111111", "fields": { "name": "Athi River", "constituency": "22222222-6666-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0026-1111-1111-111111111111", "fields": { "name": "Kinanie", "constituency": "22222222-6666-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0027-1111-1111-111111111111", "fields": { "name": "Muthwani", "constituency": "22222222-6666-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0028-1111-1111-111111111111", "fields": { "name": "Syokimau/Mlolongo", "constituency": "22222222-6666-1111-1111-111111111111" }},
+
+
+  { "model": "core.ward", "pk": "33333333-0029-1111-1111-111111111111", "fields": { "name": "Kalama", "constituency": "22222222-7777-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0030-1111-1111-111111111111", "fields": { "name": "Mua", "constituency": "22222222-7777-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0031-1111-1111-111111111111", "fields": { "name": "Mutituni", "constituency": "22222222-7777-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0032-1111-1111-111111111111", "fields": { "name": "Machakos Central", "constituency": "22222222-7777-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0033-1111-1111-111111111111", "fields": { "name": "Mumbuni North", "constituency": "22222222-7777-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0034-1111-1111-111111111111", "fields": { "name": "Muvuti/Kiima Kimwe", "constituency": "22222222-7777-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0035-1111-1111-111111111111", "fields": { "name": "Kola", "constituency": "22222222-7777-1111-1111-111111111111" }},
+
+  { "model": "core.ward", "pk": "33333333-0036-1111-1111-111111111111", "fields": { "name": "Mbiuni", "constituency": "22222222-8888-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0037-1111-1111-111111111111", "fields": { "name": "Makutano/Mwala", "constituency": "22222222-8888-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0038-1111-1111-111111111111", "fields": { "name": "Masii", "constituency": "22222222-8888-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0039-1111-1111-111111111111", "fields": { "name": "Muthetheni", "constituency": "22222222-8888-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0040-1111-1111-111111111111", "fields": { "name": "Wamunyu", "constituency": "22222222-8888-1111-1111-111111111111" }},
+  { "model": "core.ward", "pk": "33333333-0041-1111-1111-111111111111", "fields": { "name": "Kibauni", "constituency": "22222222-8888-1111-1111-111111111111" }}
+]

@@ -1,0 +1,55 @@
+# ENVIRONMENT
+.env
+.env.*
+
+# DATABASE
+*.sqlite3
+*.postgres
+
+# SECRETS / KEYS
+*.pem
+*.key
+
+# PYTHON CACHES
+__pycache__/
+*.py[cod]
+
+# VIRTUAL ENVIRONMENTS
+venv/
+.venv/
+env/
+ENV/
+
+# DJANGO STUFF
+*.log
+*.pot
+*.pyc
+db.sqlite3
+media/
+staticfiles/
+
+# TESTING / COVERAGE
+htmlcov/
+*.cover
+coverage.xml
+*.bak
+
+# EDITORS / IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# SYSTEM FILES
+.DS_Store
+Thumbs.db
+
+# DOCKER 
+*.pid
+docker-compose.override.yml
+
+# NODE 
+node_modules/
+dist/
+build/
+
