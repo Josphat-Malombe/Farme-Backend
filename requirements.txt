@@ -34,6 +34,7 @@ googlemaps==4.10.0
 grpcio==1.73.1
 grpcio-status==1.71.2
 gTTS==2.5.4
+gunicorn==23.0.0
 h11==0.16.0
 httpcore==1.0.9
 httplib2==0.22.0
@@ -52,9 +53,11 @@ numpy==2.2.6
 openai==1.93.1
 openai-whisper==20250625
 oracledb==3.1.1
-pillow ==10.3.0
+packaging==25.0
+pillow @ file:///C:/b/abs_b06nvnir5m/croot/pillow_1752524543576/work
 proto-plus==1.26.1
 protobuf==5.29.5
+psycopg2==2.9.10
 psycopg2-binary==2.9.10
 pyasn1==0.6.1
 pyasn1_modules==0.4.2
