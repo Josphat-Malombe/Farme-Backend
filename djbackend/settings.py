@@ -41,7 +41,7 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 
-ALLOWED_HOSTS = ['farme-backend.onrender.com', '127.0.0.1', 'localhost']
+#ALLOWED_HOSTS = ['farme-backend.onrender.com', '127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -235,6 +235,7 @@ SECURE_HSTS_PRELOAD = True
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+"""
 
 LOGGING = {
     'version':1,
@@ -253,3 +254,4 @@ LOGGING = {
         },
     },
 }
+"""
