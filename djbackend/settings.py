@@ -40,7 +40,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 
-ALLOWED_HOSTS = ['*', 'https://agriepulse.netlify.app','http://localhost:8080','http://192.168.43.91:8080','https://farme-backend.onrender.com']
+ALLOWED_HOSTS = ['farme-backend.onrender.com', '127.0.0.1', 'localhost']
 
 # Application definition
 
