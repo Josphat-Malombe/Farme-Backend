@@ -39,7 +39,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['https://farme-backend.onrender.com/']
+ALLOWED_HOSTS = config('ALLOWED_HOST', cast=Csv())
 
 
 # Application definition
@@ -153,8 +153,8 @@ JAZZMIN_SETTINGS = {
     "site_brand": "Quantum Ripple",
     "welcome_sign": "Welcome to the Agricultural Admin Dashboard",
     "copyright" : "Quantum Ripple 2025",
-    "site_logo": None,  # Add logo later 
-    "site_icon": None,  # Favicon/logo
+    "site_logo": None,  
+    "site_icon": None,  
 
     "theme": "darkly",
 
@@ -226,10 +226,29 @@ CSRF_COOKIE_HTTPONLY = True
 
 """
 SECURE_SSL_REDIRECT = True
-SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_SECONDS = 31536000  
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 """
 
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+LOGGING = {
+    'version':1,
+    'handlers':{
+        'file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'logs/django.log',
+        },
+    },
+    'loggers': {
+        'django':{
+            'handlers': ['file'],
+            'level': 'WARNING',
+            'propagate': True,
+        },
+    },
+}
