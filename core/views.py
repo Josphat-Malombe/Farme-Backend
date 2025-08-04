@@ -15,6 +15,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.parsers import MultiPartParser, FormParser
+
 
 from openai import OpenAI
 from gtts import gTTS
@@ -43,10 +45,10 @@ import requests
 import google.generativeai as genai
 
 
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+genai.configure(api_key=settings.GEMINI_API_KEY)
 
 #for model in genai.list_models():
-   # print(model.name)
+  # print(model.name)
 
 
 
@@ -171,7 +173,7 @@ class ChatSessionMessageView(ListAPIView):
 #defining the agent
 class ChatAgentRespondView(APIView):
     authentication_classes = [JWTAuthentication]
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
    
 
     def post(self, request):
@@ -180,6 +182,9 @@ class ChatAgentRespondView(APIView):
 
         if not question:
             return Response({"error": "Question is required!"}, status=400)
+        
+
+        
 
         if session_id:
             try:
@@ -190,6 +195,8 @@ class ChatAgentRespondView(APIView):
         else:
             session = ChatSession.objects.create(farmer=request.user)
             farmer = session.farmer
+
+        
 
    
         ChatMessage.objects.create(
@@ -263,12 +270,15 @@ Begin your response now:
             reply = response.text
 
             ChatMessage.objects.create(session=session, role="agent", content=reply)
+            print(str(session_id))
 
             return Response({
-                "session_id": session.id,
+                "session_id": str(session.id),
                 "question": question,
                 "response": reply
             }, status=201)
+        
+           
 
         except Exception as e:
             return Response({"error": f"llm error: {str(e)}"}, status=500)
@@ -310,127 +320,16 @@ Begin your response now:
             """
         
 
-"""
-
-class SpeechTrascriptionView(APIView):
-
-    def post(self, request):
-        session_id=request.data.get("session_id")
-        audio_file = request.FILES.get("audio")
-
-        if not audio_file or not session_id:
-            return Response({"error": "session_id and audio are required!"}, status=status.HTTP_400_BAD_REQUEST)
-        
-        #validating session
-        try:
-            session=ChatSession.objects.get(id=session_id)
-            farmer=session.farmer
-        
-        except ChatSession.DoesNotExist:
-            return Response({"error":"invalid session id!!"})
-        
-
-
-
-
-#saving snd transcribing audio
-
-        try:
-
-            temp_dir = tempfile.gettempdir()
-            temp_path=os.path.join(temp_dir, audio_file.name)
-            
-            with open(temp_path, "wb") as f:
-                for chunk in audio_file.chunks():
-                    f.write(chunk)
-
-            model = whisper.load_model("base") #small,large,medium
-
-            result = model.transcribe(temp_path)
-
-            transcript=result["text"].strip()
-
-            #return Response({
-              # "transcription":transcript.strip()
-           # },status=status.HTTP_200_OK)
-    
-        except Exception as e:
-            print("Transcription error: ",e)
-            return Response({"error": f"Trascription failed:  {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-        #saving transcript
-        user_msg=ChatMessage.objects.create(
-            session=session,
-            role="user",
-            content=transcript
-
-        )
-
-        #agent context
-
-        system_prompt = 
-        
-
-        chat_history=ChatMessage.objects.filter(session=session).order_by("-timestamp")[:4]
-        chat_history=reversed(chat_history)
-
-
-        gemini_messages=[{"role":"user", "parts":[system_prompt]}]
-        for msg in chat_history:
-            role="user" if msg.role=="user" else "model"
-            gemini_messages.append({"role":role, "parts":[msg.content]})
-
-        gemini_messages.append({"role":"user", "parts": [transcript]})
-
-        #generating output
-
-        try:
-            genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-
-            model=genai.GenerativeModel("models/gemini-2.5-flash-preview-04-17-thinking")
-
-            response=model.generate_content(gemini_messages)
-
-            reply=response.text
-
-            #saving agent response to db
-            ChatMessage.objects.create(
-                session=session,
-                role="agent",
-                content=reply
-            )
-
-            #converting resonses to audio
-
-            media_dir=os.path.join(os.getcwd(), "media")
-            os.makedirs(media_dir, exist_ok=True)
-            print("transcribed text",transcript)
-
-            print("text to convert:", reply)
-
-            tts=gTTS(text=reply,lang="en")
-            filename=f"response_{uuid.uuid4().hex}.mp3"
-            filepath=os.path.join(media_dir ,filename)
-            tts.save(filepath)
-
-        except Exception as e:
-
-            return Response({"error": f"AI Agent Error: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
-        return Response({
-            "transcription":transcript,
-            "response":reply,
-            "audio_url":request.build_absolute_uri(f"/media/{filename}")
-        }, status=status.HTTP_201_CREATED)
-        """
 
 
 
 class VoiceChatView(APIView):
     authentication_classes = [JWTAuthentication]
+    parser_classes=[MultiPartParser, FormParser]
     def post(self, request):
         session_id = request.data.get("session_id",None)
         audio_file = request.FILES.get("audio")
+        exclude_from_history = request.data.get("exclude_from_history", False)
 
         if not audio_file:
             return Response({"error": "audio is required"}, status=400)
@@ -459,11 +358,15 @@ class VoiceChatView(APIView):
             transcript = self.transcribe_audio(farmer_audio_path)
 
        
-            ChatMessage.objects.create(session=session, role="user", content=transcript)
+            if not exclude_from_history:
+                ChatMessage.objects.create(session=session, role="user", content=transcript)
 
 
             ai_text = self.generate_ai_reply(farmer, transcript, session)
-            ChatMessage.objects.create(session=session, role="agent", content=ai_text)
+            
+
+            if not exclude_from_history:
+                ChatMessage.objects.create(session=session, role="agent", content=ai_text)
 
         
             ai_audio_url = self.generate_tts(ai_text)
@@ -485,20 +388,47 @@ class VoiceChatView(APIView):
 
   
 
+
+
+
+
     def transcribe_audio(self, audio_path):
         model = whisper.load_model("small")  
         result = model.transcribe(audio_path)
         return result["text"].strip()
 
     def generate_ai_reply(self, farmer, transcript, session):
-        genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+        gemini_key=settings.GEMINI_API_KEY
+        genai.configure(api_key=gemini_key)
 
         system_prompt = f"""
-        You are Quantum Ripple AI, an agricultural advisor.
-        Farmer location: County={farmer.county}, Constituency={farmer.constituency}, Ward={farmer.ward}
-        Farmer's question: {transcript}
-        Respond simply, actionable, localized.
-        """
+You are Quantum Ripple AI Agent, an expert agricultural advisor dedicated to helping smallholder farmers in Kenya. Your goal is to provide accurate, actionable, and hyper-localized advice.
+
+Farmer Context:
+The farmer asking the question is located in:
+County: {farmer.county}
+Constituency: {farmer.constituency}
+Ward: {farmer.ward}
+
+
+
+Farmers full name is: {farmer.full_name} but you can just use the first name
+
+Instructions for You (Quantum Ripple AI):
+1. Analyze Context: Consider the farmer's location and question.
+2. Prioritize Localization: Focus on conditions in the farmer's ward and county.
+3. Actionable & Practical: Give steps the farmer can realistically follow.
+4. Farmer-Friendly Language: Be clear and simple.
+5. Conciseness: Give the key points first.
+
+7. Safety: Avoid unverified advice. Recommend experts if unsure.
+8. Empathy: Be kind and helpful.
+9. Search: You are also allowed to search in the internet if you can
+
+Begin your response now:
+
+"""
+
 
        
         chat_history = ChatMessage.objects.filter(session=session).order_by("-timestamp")[:4]
@@ -517,8 +447,14 @@ class VoiceChatView(APIView):
         filename = f"response_{uuid.uuid4().hex}.mp3"
         filepath = os.path.join(media_dir, filename)
 
-        tts = gTTS(text=text, lang="en")
-        tts.save(filepath)
+        #engine=pyttsx3.init()
+        #engine.save_to_file(text, filepath)
+        #engine.runAndWait()
+
+
+
+        #tts = gTTS(text=text, lang="en")
+        #tts.save(filepath)
 
         return f"/media/{filename}"
 
