@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.conf import settings
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 
 from rest_framework.views import APIView
 from rest_framework import generics, permissions
@@ -519,6 +521,7 @@ class WeatherApiView(APIView):
 
 """
 
+@method_decorator(cache_page(60*10), name='get')
 class WeatherApiView(APIView):
     def get(self, request):
         county = request.query_params.get('county')
